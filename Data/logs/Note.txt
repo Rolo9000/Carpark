@@ -1,2 +1,2 @@
 # this will be a csv/spreadsheet file of the cars who entereds/ exied the carpark and at what times
-# attributes: time, car reg, entering or leaving (BOOOLEAN - true for entering, false for leaving).
+# attributes: date, time, car reg, entering or leaving (BOOOLEAN - true for entering, false for leaving).
