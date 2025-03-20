@@ -42,8 +42,18 @@ async def run_anpr(image : np.array): # image will already be type numpy array
 
 
 
-
-
+def storeNoPlate(output):
+	allowedPlates = [] # NEED TO GET allowed from data - allowed plates (or just add as list in this code
+	with open('last plate/last.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
+		f.write(output.rec_text)
+	with open('last plate/attributes.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
+		f.write(f"Plate Attributes:\nDetection bounding box: {output.det_box}\nRecognition text: {rec_text}\nRecognition confidence: {rec_conf}\n\n")
+	if output.rec_text in allowedPlates:
+		a = True
+	else:
+		a = False
+	with open('last plate/isLastRegPlateRegistered.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
+		f.write(a)
 # ---------- POINT A -------------------
 # Video capture and motion detection:
 
@@ -72,6 +82,7 @@ while True:
     if result > threshold: # set threshold at start of program so can easily change it
       #print("Motion detected") # MAY want for testing / to display on gui
       outputA = asyncio.run(run_anpr(frame)) # calls anpr function (frame is already type numpy array)
+      storeNoPlate(outputA)
     # CODE HERE TO DETECT REG PLATE + ADD TO DATABASE
     lastMean= np.mean(gray) # now sets current mean to last so can redo loop with next frame
 
