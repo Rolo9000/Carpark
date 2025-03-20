@@ -30,4 +30,4 @@ The project simulates the basic process of a car park system.
 * Rohan Somaia
 * Ali Raza
 
-(The manchester grammer school)
+(The Manchester Grammar School)
