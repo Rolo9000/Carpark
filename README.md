@@ -30,6 +30,3 @@ The project simulates the basic process of a car park system.
 * Rohan Somaia
 * Ali Raza
 
-## GitHub Repository
-
-[https://github.com/Rolo9000/Carpark](https://github.com/Rolo9000/Carpark)
