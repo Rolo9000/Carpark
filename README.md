@@ -27,7 +27,5 @@ The project simulates the basic process of a car park system.
 
 ## Authors
 
-* Rohan Somaia
-* Ali Raza
-
-(The Manchester Grammar School)
+* Rohan
+* Ali
