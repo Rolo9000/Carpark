@@ -1,6 +1,8 @@
 import tkinter as tk
-from tkinter.simpledialog import askstring, askinteger
-#hello
+from tkinter.simpledialog import askinteger
+import csv
+from datetime import datetime
+
 class CarPark:
     def __init__(self, root):
         self.root = root
@@ -10,7 +12,7 @@ class CarPark:
         self.cols = askinteger("Car Park", "Enter the number of columns:", minvalue=1, maxvalue=20)
         
         self.car_park = [[None for _ in range(self.cols)] for _ in range(self.rows)]
-        self.buttons = []
+        self.buttons = []  
         
         for i in range(self.rows):
             row_buttons = []
@@ -21,78 +23,35 @@ class CarPark:
                 row_buttons.append(button)
             self.buttons.append(row_buttons)
         
-        self.registered_cars = {}
+        self.update_gui()
+
+    def log_activity(self, action, slot):
+        with open("ActivityLog.csv", mode="a", newline="") as file:
+            writer = csv.writer(file)
+            writer.writerow([datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), action, f"Slot {slot}"])
 
     def toggle_space(self, row, col):
+        slot_number = row * self.cols + col + 1
         if self.car_park[row][col]:
             self.car_park[row][col] = None  
-            self.buttons[row][col].config(bg="green", text=f"Space {row * self.cols + col + 1}")
+            self.buttons[row][col].config(bg="green", text=f"Space {slot_number}")
+            self.log_activity("Exit", slot_number)
         else:
             self.car_park[row][col] = "Occupied"  
             self.buttons[row][col].config(bg="red", text=f"Occupied")
+            self.log_activity("Entry", slot_number)
+        self.update_gui()
 
-    def process_user_choice(self):
-        choice = askstring("Car Park", "Do you want to park or exit? (Park/Exit)").lower()
-        if choice == "park":
-            number_plate = askstring("Enter Number Plate", "Please enter your number plate:")
-            if number_plate:
-                self.choose_parking_slot(number_plate)
-        elif choice == "exit":
-            number_plate = askstring("Exit Car Park", "Please enter the number plate of the car leaving:")
-            if number_plate:
-                self.remove_car(number_plate)
-        else:
-            print("Invalid choice. Please enter 'Park' or 'Exit'.")
-            self.process_user_choice()
-
-    def choose_parking_slot(self, number_plate):
-        if number_plate in self.registered_cars:
-            print(f"Car {number_plate} is already parked.")
-            return  
-
-        slot = askstring("Choose Parking Slot", "Please enter the parking slot number (1 to {0}):".format(self.rows * self.cols))
-        try:
-            slot = int(slot) - 1
-            row = slot // self.cols
-            col = slot % self.cols
-
-            if 0 <= slot < self.rows * self.cols and self.car_park[row][col] is None:
-                self.car_park[row][col] = number_plate
-                self.buttons[row][col].config(bg="red", text=f"Occupied")
-                self.registered_cars[number_plate] = (row, col)
-                print(f"Car {number_plate} parked in space {slot + 1}.")
-            else:
-                print("Invalid or already occupied parking spot.")
-        except ValueError:
-            print("Invalid slot number. Please try again.")
-            self.choose_parking_slot(number_plate)
-
-    def remove_car(self, number_plate):
-        if number_plate not in self.registered_cars:
-            print(f"Car with number plate {number_plate} is not parked in the car park.")
-            return  
-
-        row, col = self.registered_cars[number_plate]
-        self.car_park[row][col] = None
-        self.buttons[row][col].config(bg="green", text=f"Space {row * self.cols + col + 1}")
-        del self.registered_cars[number_plate]
-        print(f"Car {number_plate} has exited and the parking space is now available.")
-
-    def refresh_display(self):
+    def update_gui(self):
         for i in range(self.rows):
             for j in range(self.cols):
+                slot_number = i * self.cols + j + 1
                 if self.car_park[i][j] is None:
-                    self.buttons[i][j].config(bg="green", text=f"Space {i * self.cols + j + 1}")
+                    self.buttons[i][j].config(bg="green", text=f"Space {slot_number}")
                 else:
-                    self.buttons[i][j].config(bg="red", text=f"Occupied")
+                    self.buttons[i][j].config(bg="red", text="Occupied")
+        self.root.after(1000, self.update_gui)
 
 root = tk.Tk()
 car_park = CarPark(root)
-
-def keep_running():
-    car_park.process_user_choice()
-    car_park.refresh_display()
-    root.after(1000, keep_running)
-
-keep_running()
 root.mainloop()
