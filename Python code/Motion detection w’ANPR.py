@@ -44,6 +44,8 @@ async def run_anpr(image : np.array): # image will already be type numpy array
 
 def storeNoPlate(output):
 	allowedPlates = [] # NEED TO GET allowed from data - allowed plates (or just add as list in this code
+	with open('data/logs/allowed reg plates.txt', r):
+		
 	with open('last plate/last.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
 		f.write(output.rec_text)
 	with open('last plate/attributes.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
