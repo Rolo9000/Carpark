@@ -29,3 +29,6 @@ The project simulates the basic process of a car park system.
 
 * Rohan
 * Ali
+
+
+https://rolo0.notion.site/Carpark-Management-System-1c29e9d6015b80298d32d5b31f3a1089?pvs=73
