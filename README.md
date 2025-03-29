@@ -1,4 +1,4 @@
-# Carpark System
+# Car Park System
 
 This project is a simple car park management system developed for TeenTech. It demonstrates basic functionality such as motion detection, license plate recording, space selection, and gate control.
 
