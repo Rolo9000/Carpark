@@ -46,7 +46,7 @@ class CarPark:
         except FileNotFoundError:
             return "Error"
 
-##Logs activity on a CSV file. Writes to a flat-file database with the following attributes: Date, Time, Entry / Exit, Space, Number plate, Registration status.
+#Logs activity on a CSV file. Writes to a flat-file database with the following attributes: Date, Time, Entry / Exit, Space, Number plate, Registration status.
     def log_activity(self, action, space):
         number_plate = self.read_last_number_plate()
         registration_status = self.read_registration_status()
