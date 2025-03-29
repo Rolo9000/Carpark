@@ -43,19 +43,19 @@ async def run_anpr(image : np.array): # image will already be type numpy array
 
 
 def storeNoPlate(output):
-	with open('data/logs/allowed reg plates.txt', r) as fi:
+	with open('data/logs/allowed reg plates.txt', 'r') as fi:
 		allowedPlates = [line.strip() for line in fi.readlines()]
 		
 	with open('last plate/last.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
 		f.write(output.rec_text)
 	with open('last plate/attributes.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
-		f.write(f"Plate Attributes:\nDetection bounding box: {output.det_box}\nRecognition text: {rec_text}\nRecognition confidence: {rec_conf}\n\n")
+		f.write(f"Plate Attributes:\nDetection bounding box: {output.det_box}\nRecognition text: {output.rec_text}\nRecognition confidence: {output.rec_conf}\n\n")
 	if output.rec_text in allowedPlates:
 		a = True
 	else:
 		a = False
 	with open('last plate/isLastRegPlateRegistered.text', 'w') as f: # IDK IF THIS IS HOW U DO IT
-		f.write(a)
+		f.write(str(a))
 # ---------- POINT A -------------------
 # Video capture and motion detection:
 
