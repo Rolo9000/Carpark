@@ -88,16 +88,9 @@ while True:
     # CODE HERE TO DETECT REG PLATE + ADD TO DATABASE
     lastMean= np.mean(gray) # now sets current mean to last so can redo loop with next frame
 
-    if (cv2.waitKey(1) & 0xFF == ord('q')):# Check if the 'q' key was pressed (using q as escape key)
-        # cv2.waitKey(1) waits for 1 millisecond for a key press
-        # & 0xFF is a bitwise AND operation to ensure we only consider the last 8 bits of the key code
-        # ord('q') gets the ASCII value of the 'q' character
-        break  # If 'q' was pressed, exit the loop
 
-cap.release()# Release the VideoCapture object, freeing the webcam resources
-cv2.destroyAllWindows()  # Close all OpenCV windows
 
-# can also go on terminal and press ctrl + c to stop program if q doesn't work
+# can go on terminal and press ctrl + c to stop program
 
 
 # ---------- POINT B -------------------
